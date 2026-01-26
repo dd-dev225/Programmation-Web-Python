@@ -1,0 +1,9 @@
+# Django Framework
+Django>=4.0
+
+# Variables d'environnement
+python-dotenv
+
+# Drivers Base de Données
+pymysql          # Pour MySQL
+psycopg2-binary  # Pour PostgreSQL
