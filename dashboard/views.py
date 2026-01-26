@@ -26,13 +26,14 @@ def dashboard_2(request):
     return render(request, "dashboard/dashboard_2.html", context)
 
 def segmentliste(request, segment):
-    query_set = Ligne.objects.filter(client__cltSegment=segment)
+    seg_qs = Ligne.objects.filter(client__cltSegment=segment)
     context = {
-        'query_set': query_set,
+        'seg_data': seg_qs,
     }
     return render(request, "dashboard/listes_data_segment.html", context)
+
 def dashboard_1(request):
-    total_vente = Ligne.objects.filter(client__cltSegment="Consumer").aggregate(ca_seg=Sum("ligPrix"))
+    ca_consumer = Ligne.objects.filter(client__cltSegment="Consumer").aggregate(ca_seg=Sum("ligPrix"))
     data = Ligne.objects.values('localite__locRegion', 'ligQuantite', 'localite__locVille')
     df_data = pd.DataFrame(data)
 
@@ -45,8 +46,7 @@ def dashboard_1(request):
                       hoverinfo='skip', showlegend=False)
     chart = fig.to_html()
     context = {
-        # Définir ici toutes les variable à transférer à la page html
-        'total_vente': round(total_vente['ca_seg'], 2),
+        'ca_consumer': round(ca_consumer['ca_seg'], 2),
         'chart': chart
     }
     return render(request, "dashboard/dashboard_1.html", context)
