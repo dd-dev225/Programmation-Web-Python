@@ -7,3 +7,7 @@ python-dotenv
 # Drivers Base de Données
 pymysql          # Pour MySQL
 psycopg2-binary  # Pour PostgreSQL
+
+# Visualisation et Data
+plotly
+pandas
