@@ -30,10 +30,9 @@ class Command(BaseCommand):
         print(f"{len(lignes)} lignes lues dans le CSV.")
 
         # =====================================================================
-        # PARTIE 1 COMMENTÉE (déjà exécutée précédemment)
+        # PARTIE 1 : création des entités uniques
         # =====================================================================
-        """
-        print("Partie 1 : création des entités uniques (commentée)")
+        print("Partie 1 : création des entités uniques")
         prod_enr = set()
         clt_enr = set()
         loc_enr = set()
@@ -86,7 +85,6 @@ class Command(BaseCommand):
                     }
                 )
                 com_enr.add(row['ID_Commande'])
-        """
 
         # =====================================================================
         # PARTIE 2 ACTIVE : création des lignes de commande
