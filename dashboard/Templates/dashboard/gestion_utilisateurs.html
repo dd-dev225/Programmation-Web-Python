@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}Gestion des Utilisateurs{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-12">
+        <div class="white-box">
+            <h3 class="box-title">
+                <i class="fa fa-users"></i> Gestion des Utilisateurs
+                <a href="/admin/auth/user/add/" class="btn btn-success btn-sm pull-right">
+                    <i class="fa fa-plus"></i> Ajouter
+                </a>
+            </h3>
+
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Username</th>
+                            <th>Email</th>
+                            <th>Nom complet</th>
+                            <th>Groupes</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td><strong>{{ user.username }}</strong></td>
+                            <td>{{ user.email|default:"-" }}</td>
+                            <td>{{ user.first_name }} {{ user.last_name }}</td>
+                            <td>
+                                {% for group in user.groups.all %}
+                                <span class="label label-info">{{ group.name }}</span>
+                                {% empty %}
+                                <em class="text-muted">Aucun groupe</em>
+                                {% endfor %}
+                            </td>
+                            <td>
+                                {% if user.is_superuser %}
+                                <span class="label label-danger">Superuser</span>
+                                {% elif user.is_staff %}
+                                <span class="label label-warning">Staff</span>
+                                {% else %}
+                                <span class="label label-default">Standard</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="/admin/auth/user/{{ user.id }}/change/" class="btn btn-primary btn-xs">
+                                    <i class="fa fa-edit"></i> Modifier
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center text-muted">Aucun utilisateur trouvé</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

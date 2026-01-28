@@ -1,17 +1,21 @@
 from django.urls import path
 from . import views
-from django.contrib.auth import views as auth_views
 from django.views.generic import TemplateView
 
-app_name = 'dashboard'   # ← IMPORTANT Car permettant de spécifier le namespace de l'application pour définir les urls dans les pages web
+app_name = 'dashboard'
 
 urlpatterns = [
+    # Dashboards - Accessibles aux deux groupes
     path("", views.dashboard_1, name="dashboard_1"),
-    path("dashbord_2", views.dashboard_2, name="dashboard_2"),
+    path("dashbord_2/", views.dashboard_2, name="dashboard_2"),
     path("<str:segment>/liste/", views.segmentliste, name="segmentliste"),
     
-    # Authentification
-    path('login/', auth_views.LoginView.as_view(template_name='dashboard/login2.html'), name='login'),
+    # Gestion - Administrateurs uniquement
+    path('gestion/utilisateurs/', views.gestion_utilisateurs, name='gestion_utilisateurs'),
+    path('gestion/groupes/', views.gestion_groupes, name='gestion_groupes'),
+    
+    # Authentification personnalisée
+    path('login/', views.custom_login, name='login'),
+    path('logout/', views.custom_logout, name='logout'),
     path('register/', TemplateView.as_view(template_name='dashboard/register2.html'), name='register'),
-    path('logout/', auth_views.LogoutView.as_view(next_page='dashboard:login'), name='logout'),
 ]

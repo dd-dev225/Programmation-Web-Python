@@ -44,6 +44,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # Doit être après AuthenticationMiddleware pour que request.user existe
+    'dashboard.middleware.UserSessionMiddleware',
 ]
 
 ROOT_URLCONF = 'DjangoProject.urls'
